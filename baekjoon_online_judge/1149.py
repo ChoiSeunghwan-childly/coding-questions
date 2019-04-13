@@ -12,11 +12,20 @@
 # 둘째 줄부터 N개의 줄에 각 집을 빨강으로 칠할 때, 초록으로 칠할 때,
 # 파랑으로 칠할 때 드는 비용이 주어진다. 비용은 1,000보다 작거나 같은 자연수이다.
 
-def solution(N):
-    for i in range(N):
-        print(i)
-        r, g, b = map(int, input().split())
-        
+price = []
 
-N = int(input())
-solution(N)
+def solution(n):
+    global price
+
+    for i in range(1, n):
+        price[i][0] += price[i-1][1] if price[i-1][1] <= price[i-1][2] else price[i-1][2]
+        price[i][1] += price[i-1][0] if price[i-1][0] <= price[i-1][2] else price[i-1][2]
+        price[i][2] += price[i-1][0] if price[i-1][0] <= price[i-1][1] else price[i-1][1]
+
+    print( min(price[n-1]))
+
+if __name__ == "__main__":
+    n = int(input())
+    for i in range(n):
+        price.append(list(map(int, input().split())))
+    solution(n)
