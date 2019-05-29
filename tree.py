@@ -1,5 +1,5 @@
 #  http://ejklike.github.io/2018/01/09/traversing-a-binary-tree-1.html#fn:1
-
+# https://www.geeksforgeeks.org/tree-traversals-inorder-preorder-and-postorder/
 class Node:
     def __init__(self, data=0, left = None , right = None):
         self.data = data
