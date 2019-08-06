@@ -20,4 +20,4 @@ function solution(answers) {
     if (score_p3 === maxNum) { answer.push(3)};
 
     return answer;
-}
+}//git name 변경
