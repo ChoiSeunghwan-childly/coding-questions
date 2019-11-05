@@ -1,25 +1,31 @@
 function solution(bridge_length, weight, truck_weights) {
-    // 잘못 풀었다... 생각해보니 무게별로 다리를 건너다가 먼저 빠져나간
-    // 트럭도 있는 등의 상황을 생각 못함.
-    // 큐로 풀어야 될 듯.
-    // for timeticker 돌리면서.
-    
     let sec = 0;
+    const bridge_q = [];    
+    let capacity = weight;
     
-    while(truck_weights.length){
-        let capacity = weight;
-        let on_trucks = [];
-        for(let i = 0; i < truck_weights.length; i++){
-            if (capacity === 0)
-                break;
-            
-            if (truck_weights[i] <= capacity){
-                on_trucks.push(truck_weights[i]);
-                truck_weights.splice(i,1);
-                i -= 1
+    while(truck_weights.length || bridge_q.length){
+        sec += 1
+        
+        //dequeue
+        if(bridge_q[0])
+            if(bridge_q[0].distance === 0){
+                capacity += bridge_q.weight;
+                bridge_q.shift();
+                
+                if(capacity > weight)
+                    return "err";
             }
-        }
-        sec += bridge_length; 
+        //enqueue
+        if(truck_weights[0])
+            if(truck_weights[0] <= capacity){
+                capacity -= truck_weights[0];
+                bridge_q.push({distance: bridge_length, 
+                weight: truck_weights.shift()});            
+            }
+        
+        //process
+        for(let i = 0; i < bridge_q.length; i++)
+            bridge_q[i].distance -= 1;
     }
     return sec;
 }
